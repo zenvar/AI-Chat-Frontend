@@ -3,7 +3,7 @@
         <div class="header">
             <slot name="header">Chat</slot>
         </div>
-        <div class="msgs-list">
+        <div class="msgs-list" >
             <div v-for="(message) in messages" :key="message.id" class="msg">
                 <div v-if="!message.fromMe" class="msg-else">
                     <div class="avatar">
