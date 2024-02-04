@@ -25,7 +25,7 @@
         </div>
         <div class="chat-input">
             <div class="type">
-            <textarea ref="textarea" v-model="newMessage" @input="resizeTextarea" placeholder="Type your message..."></textarea>
+            <textarea ref="textarea" v-model="newMessage" @input="resizeTextarea"></textarea>
             <button @click="sendMessage">Send</button>
             </div>
         </div>
@@ -67,8 +67,8 @@ export default {
           avatar: this.my_avatar, // 替换为用户头像的实际 URL
         });
         this.newMessage = '';
+        this.$refs.textarea.style.height = '20px';
         this.$refs.messagesContainer.scrollTop = this.$refs.messagesContainer.scrollHeight;
-        this.$refs.textarea.style.height = 'auto';
       },
     },
     mounted() {
@@ -161,10 +161,12 @@ export default {
  .chat-input textarea {
     flex-grow: 3;
     max-height: 150px;
-    font-size: 10px;
+    font-size: 14px;
+    height: 20px;
     color: #333;
     font-family: Arial, sans-serif;
     padding: 5px;
+    margin: 0px 10px;
     /*别忘了文本域的box-sizing属性值是border-box;所有的边框和padding都是在你固定的宽高的基础上绘制*/
      /*去除点击出现轮廓颜色*/
     outline: none;    
@@ -175,7 +177,7 @@ export default {
   
   .chat-input button {
     background-color: #4caf50;
-    max-height: 40px;
+    height: 30px;
     flex-grow: 1;
     color: #fff;
     border: none;
