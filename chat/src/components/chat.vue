@@ -9,13 +9,11 @@
                     <div class="avatar">
                         <img :src="message.avatar" alt="else-avatar">
                     </div>
-                    <div class="msg-bubble-else">
-                        {{ message.content }}
+                    <div class="msg-bubble-else" v-html="rendermarkdown(message.content)">
                     </div>
                 </div>
                 <div v-if="message.fromMe" class="msg-my">
-                    <div class="msg-bubble-my">
-                        {{ message.content }}
+                    <div class="msg-bubble-my" v-html="rendermarkdown(message.content)">
                     </div>
                     <div class="avatar">
                         <img :src="message.avatar" alt="my-avatar">
@@ -33,10 +31,13 @@
 </template>
 
 <script>
+    import { marked } from 'marked';
+    import hljs from "highlight.js";
 export default {
     data() {
         return {
             my_avatar: 'https://acat-image.pages.dev/file/4e27ea41320a94ea47f3e.png',
+            newMessage:'',
             messages: [
                 {
                     id: '1',
@@ -68,9 +69,12 @@ export default {
         });
         this.newMessage = '';
         this.$refs.textarea.style.height = '20px';
-        this.$refs.messagesContainer.scrollTop = this.$refs.messagesContainer.scrollHeight;
-      },
+      },    
+        rendermarkdown(rawtext){
+            return marked(rawtext);
+        },
     },
+
     mounted() {
 
     }
