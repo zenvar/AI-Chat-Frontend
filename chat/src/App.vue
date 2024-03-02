@@ -18,7 +18,7 @@ export default {
 .APP-containner {
   display: flex;
   margin: auto;
-  width: 300px;
-  height: 500px;
+  width: 1080px;
+  height: 100vh;
 }
 </style>

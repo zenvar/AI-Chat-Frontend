@@ -13,7 +13,7 @@
                     </div>
                 </div>
                 <div v-if="message.fromMe" class="msg-my">
-                    <div class="msg-bubble-my" v-html="rendermarkdown(message.content)">
+                    <div class="msg-bubble-my" v-html="enhanceCodeBlock(rendermarkdown(message.content))">
                     </div>
                     <div class="avatar">
                         <img :src="message.avatar" alt="my-avatar">
@@ -33,6 +33,21 @@
 <script>
     import { marked } from 'marked';
     import hljs from "highlight.js";
+    import 'highlight.js/styles/github.css'; // 导入highlight.js的样式
+
+
+    const renderer = new marked.Renderer();
+
+    renderer.code = (code, language) => {
+        const validLanguage = hljs.getLanguage(language) ? language : 'plaintext';
+        return `<pre><code class="hljs ${validLanguage}">${hljs.highlight(validLanguage, code).value}</code></pre>`;
+    };
+
+    marked.setOptions({
+        renderer,
+        highlight: (code) => hljs.highlight('plaintext', code).value,
+    });
+
 export default {
     data() {
         return {
@@ -73,6 +88,15 @@ export default {
         rendermarkdown(rawtext){
             return marked(rawtext);
         },
+
+        //增强代码块
+        enhanceCodeBlock (content){
+        // console.log(content)
+        //在pre块中增加一个元素用于显示
+        let enhance = content.replace(/<pre><code/g, '<pre><div class="enhance"><div class="lang">CODE</div><div class="copyCode">Copy<i class="el-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="currentColor" d="M128 320v576h576V320H128zm-32-64h640a32 32 0 0 1 32 32v640a32 32 0 0 1-32 32H96a32 32 0 0 1-32-32V288a32 32 0 0 1 32-32zM960 96v704a32 32 0 0 1-32 32h-96v-64h64V128H384v64h-64V96a32 32 0 0 1 32-32h576a32 32 0 0 1 32 32zM256 672h320v64H256v-64zm0-192h320v64H256v-64z"></path></svg></i></div></div><code')
+        // console.log(enhance)
+        return enhance
+        }
     },
 
     mounted() {
@@ -93,8 +117,9 @@ export default {
 }
 
 .header {
-    background-color: #93a6b3;
-    color: #fff;
+    background-color: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(50%);
+    color: #393939;
     padding: 10px;
     text-align: center;
 }
@@ -149,7 +174,6 @@ export default {
     background-color: #80a4bb;
     color: #fff;
     overflow-wrap: break-word;
-
 }
 
 .chat-input {
@@ -189,5 +213,31 @@ export default {
     cursor: pointer;
   }
 
+
+  .msg-bubble-my >>> pre .enhance {
+  display: flex;
+  color: #fff ;
+  padding: 0px 10px ;
+  border-radius: 5px 5px 0 0 ;
+  font-size: 16px ;
+  background: #343541de;
+  justify-content:space-between;
+}
+.msg-bubble-my >>> .copyCode{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.5s ease-in-out;
+  }
+
+  .msg-bubble-my >>>  &:hover{
+      color: #bae9a4d7;
+    }
+
+    .msg-bubble-my >>> i{
+      font-size: 16px;
+      margin-left: 5px;
+    }
 
 /* Add additional styling for input and send button as needed */</style>
