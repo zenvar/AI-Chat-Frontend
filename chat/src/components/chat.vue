@@ -23,7 +23,7 @@
         </div>
         <div class="chat-input">
             <div class="type">
-            <textarea ref="textarea" v-model="newMessage" @input="resizeTextarea"></textarea>
+            <textarea rows="1" dir="auto" placeholder="Type Here!" ref="textarea" v-model="newMessage" @input="resizeTextarea"></textarea>
             <button @click="sendMessage">Send</button>
             </div>
         </div>
@@ -72,7 +72,7 @@ export default {
     methods: {
       resizeTextarea() {
       this.$refs.textarea.style.height = 'auto';
-      this.$refs.textarea.style.height = (this.$refs.textarea.scrollHeight + 2) + 'px';
+      this.$refs.textarea.style.height = (this.$refs.textarea.scrollHeight) + 'px';
     },
       sendMessage() {
         // 发送消息到后端
@@ -112,12 +112,12 @@ export default {
     flex-direction: column;
     flex-grow: 1;
     margin: 0 auto;
-    border: 1px solid #ccc;
+    border: 2px solid #d5f6ef;
     border-radius: 5px;
 }
 
 .header {
-    background-color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(67, 181, 137, 0.6);
     backdrop-filter: blur(50%);
     color: #393939;
     padding: 10px;
@@ -155,11 +155,12 @@ export default {
 .msg-bubble-else {
     margin-left: 5px;
     margin-top: 10px;
-    min-height: 20px;
+    min-height: 15px;
     padding: 10px;
     border-radius: 1px 8px 8px 10px;
-    background-color: #ecf0f1;
+    background-color: #ffe8ef;
     max-width: 70%;
+    min-width: 40%;
     /* Adjust as needed */
 }
 
@@ -167,33 +168,39 @@ export default {
     margin-left: auto;
     margin-top: 10px;
     margin-right: 5px;
-    min-height: 20px;
+    min-height: 15px;
     padding: 10px;
     border-radius: 8px 1px 10px 8px;
     max-width: 70%;
-    background-color: #80a4bb;
-    color: #fff;
+    min-width: 20%;
+    background-color: #cae5d9;
+    color: #000000;
     overflow-wrap: break-word;
 }
 
 .chat-input {
     margin-top: auto;
-    padding: 10px;
-    background-color: #ccc;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    border-radius: 10px;
+    border: 2px solid #549372;
+    padding: 5px;
   }
 
   .type {
     display: flex;
+    align-items: flex-end;
   }
   
  .chat-input textarea {
-    flex-grow: 3;
+    border: 0px;
+    padding: 0;
     max-height: 150px;
-    font-size: 14px;
-    height: 20px;
+    width: calc(100% - 80px); /* 让输入框和按钮在同一行，留出按钮的宽度 */
+    font-size: 18px;
     color: #333;
     font-family: Arial, sans-serif;
-    padding: 5px;
     margin: 0px 10px;
     /*别忘了文本域的box-sizing属性值是border-box;所有的边框和padding都是在你固定的宽高的基础上绘制*/
      /*去除点击出现轮廓颜色*/
@@ -201,12 +208,13 @@ export default {
       /*如果有需要，去掉右下角的可拉伸变大小的图标和功能*/
     resize: none;
       /*padding已在重置样式中去除，如果没有去除，记得有padding哦*/
+
  }
   
   .chat-input button {
-    background-color: #4caf50;
+    background-color: #44c884;
     height: 30px;
-    flex-grow: 1;
+    width: 80px;
     color: #fff;
     border: none;
     padding: 8px;
@@ -220,11 +228,10 @@ export default {
   padding: 0px 10px ;
   border-radius: 5px 5px 0 0 ;
   font-size: 16px ;
-  background: #343541de;
+  background: #abacc0de;
   justify-content:space-between;
 }
 .msg-bubble-my >>> .copyCode{
-    display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
