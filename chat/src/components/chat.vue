@@ -23,7 +23,9 @@
         </div>
         <div class="chat-input">
             <div class="type">
-            <textarea rows="1" dir="auto" placeholder="Type Here!" ref="textarea" v-model="newMessage" @input="resizeTextarea"></textarea>
+            <div class="warp">
+                <textarea rows="1" dir="auto" placeholder="Type Here!" ref="textarea" v-model="newMessage" @input="resizeTextarea"></textarea>
+            </div>
             <button @click="sendMessage">Send</button>
             </div>
         </div>
@@ -56,7 +58,7 @@ export default {
             messages: [
                 {
                     id: '1',
-                    content: "Hello!888888 888888888 88888888 888888888888 8888888888888888 8888888888888  88888 88888  88888888888",
+                    content: "## Title2 \n**Test**\n ```java\nint a = test;\nint b = 111;\nint c = 123;\n```\n-test!",
                     fromMe: false,
                     avatar: 'https://acat-image.pages.dev/file/91d6f1b67af3ab9ca93e8.png', // 替换为服务器头像的实际 URL
                 },
@@ -83,7 +85,7 @@ export default {
           avatar: this.my_avatar, // 替换为用户头像的实际 URL
         });
         this.newMessage = '';
-        this.$refs.textarea.style.height = '20px';
+        this.$refs.textarea.style.height = 'auto';
       },    
         rendermarkdown(rawtext){
             return marked(rawtext);
@@ -93,7 +95,7 @@ export default {
         enhanceCodeBlock (content){
         // console.log(content)
         //在pre块中增加一个元素用于显示
-        let enhance = content.replace(/<pre><code/g, '<pre><div class="enhance"><div class="lang">CODE</div><div class="copyCode">Copy<i class="el-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="currentColor" d="M128 320v576h576V320H128zm-32-64h640a32 32 0 0 1 32 32v640a32 32 0 0 1-32 32H96a32 32 0 0 1-32-32V288a32 32 0 0 1 32-32zM960 96v704a32 32 0 0 1-32 32h-96v-64h64V128H384v64h-64V96a32 32 0 0 1 32-32h576a32 32 0 0 1 32 32zM256 672h320v64H256v-64zm0-192h320v64H256v-64z"></path></svg></i></div></div><code')
+        let enhance = content.replace(/<pre><code/g, '<pre><div class="enhance"><div class="lang">CODE</div><div class="copyCode">Copy<span class="el-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="currentColor" d="M128 320v576h576V320H128zm-32-64h640a32 32 0 0 1 32 32v640a32 32 0 0 1-32 32H96a32 32 0 0 1-32-32V288a32 32 0 0 1 32-32zM960 96v704a32 32 0 0 1-32 32h-96v-64h64V128H384v64h-64V96a32 32 0 0 1 32-32h576a32 32 0 0 1 32 32zM256 672h320v64H256v-64zm0-192h320v64H256v-64z"></path></svg></span></div></div><code')
         // console.log(enhance)
         return enhance
         }
@@ -114,6 +116,7 @@ export default {
     margin: 0 auto;
     border: 2px solid #d5f6ef;
     border-radius: 5px;
+    overflow: hidden;
 }
 
 .header {
@@ -185,20 +188,28 @@ export default {
     margin-right: 20px;
     border-radius: 10px;
     border: 2px solid #549372;
-    padding: 5px;
+    
   }
 
   .type {
     display: flex;
     align-items: flex-end;
+    padding: 8px;
+  }
+
+  .warp {
+    display: flex;
+    min-height: 30px;
+    width: calc(100% - 50px); /* 让输入框和按钮在同一行，留出按钮的宽度 */
+    align-items: center;
   }
   
  .chat-input textarea {
     border: 0px;
-    padding: 0;
+    padding: 0px;
     max-height: 150px;
-    width: calc(100% - 80px); /* 让输入框和按钮在同一行，留出按钮的宽度 */
-    font-size: 18px;
+    width: 100%;
+    font-size: 20px;
     color: #333;
     font-family: Arial, sans-serif;
     margin: 0px 10px;
@@ -214,9 +225,10 @@ export default {
   .chat-input button {
     background-color: #44c884;
     height: 30px;
-    width: 80px;
+    width: 50px;
     color: #fff;
     border: none;
+    border-radius: 5px;
     padding: 8px;
     cursor: pointer;
   }
@@ -230,21 +242,24 @@ export default {
   font-size: 16px ;
   background: #abacc0de;
   justify-content:space-between;
+  align-items: center;
 }
 .msg-bubble-my >>> .copyCode{
-    align-items: center;
+    display: flex;
     justify-content: center;
+    align-items: center;
     cursor: pointer;
     transition: all 0.5s ease-in-out;
   }
 
-  .msg-bubble-my >>>  &:hover{
+.msg-bubble-my >>>  &:hover{
       color: #bae9a4d7;
     }
 
-    .msg-bubble-my >>> i{
-      font-size: 16px;
-      margin-left: 5px;
+.msg-bubble-my >>> svg{
+    height: 20px;
+    height: 20px    ;
+    margin-left: 5px;
     }
 
 /* Add additional styling for input and send button as needed */</style>
