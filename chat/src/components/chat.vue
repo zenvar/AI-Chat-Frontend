@@ -9,11 +9,11 @@
                     <div class="avatar">
                         <img :src="message.avatar" alt="else-avatar">
                     </div>
-                    <div class="msg-bubble-else" v-html="rendermarkdown(message.content)">
+                    <div class="markdown-body msg-bubble-else" v-html="rendermarkdown(message.content)">
                     </div>
                 </div>
                 <div v-if="message.fromMe" class="msg-my">
-                    <div class="msg-bubble-my" v-html="enhanceCodeBlock(rendermarkdown(message.content))">
+                    <div class="markdown-body msg-bubble-my" v-html="enhanceCodeBlock(rendermarkdown(message.content))">
                     </div>
                     <div class="avatar">
                         <img :src="message.avatar" alt="my-avatar">
@@ -35,7 +35,6 @@
 <script>
     import { marked } from 'marked';
     import hljs from "highlight.js";
-    import 'highlight.js/styles/github.css'; // 导入highlight.js的样式
 
 
     const renderer = new marked.Renderer();
@@ -161,7 +160,7 @@ export default {
     min-height: 15px;
     padding: 10px;
     border-radius: 1px 8px 8px 10px;
-    background-color: #ffe8ef;
+    background-color: #F8DFDF;
     max-width: 70%;
     min-width: 40%;
     /* Adjust as needed */
@@ -222,7 +221,7 @@ export default {
 
  }
   
-  .chat-input button {
+.chat-input button {
     background-color: #44c884;
     height: 30px;
     width: 50px;
@@ -234,7 +233,7 @@ export default {
   }
 
 
-  .msg-bubble-my >>> pre .enhance {
+.msg-bubble-my >>> pre .enhance {
   display: flex;
   color: #fff ;
   padding: 0px 10px ;
@@ -261,5 +260,6 @@ export default {
     height: 20px    ;
     margin-left: 5px;
     }
+
 
 /* Add additional styling for input and send button as needed */</style>

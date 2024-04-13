@@ -1,7 +1,7 @@
 // 在你的父组件或入口文件中
 <template>
   <div class="APP-containner">
-    <Chat />
+    <Chat/>
   </div>
 </template>
 

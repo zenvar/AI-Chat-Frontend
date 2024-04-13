@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
+import './mdlight.css'
 import './styles.css'
 import 'highlight.js/styles/github.css'
 
