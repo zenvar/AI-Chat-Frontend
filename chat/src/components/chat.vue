@@ -37,19 +37,18 @@
 
         </div>
         <div class="main-content">
-            <Transition name="slide">
-                <div class="main-left" v-if="!historysidebarisopen">
-                    <Sidebar />
-                </div>
-            </Transition>
+            <div class="main-left" v-if="!historysidebarisopen">
+                <Sidebar />
+            </div>
             <div class="main-right">
                 <div class="msgs-list" ref="scrollableContent" @scroll="handleScroll">
                     <div v-for="(message) in messages" :key="message.id" class="msg">
                         <div v-if="!message.fromMe" class="msg-else">
                             <div class="avatar">
-                                <img :src="message.avatar" alt="else-avatar">
+                                <img :src="message.avatar" alt="else">
                             </div>
-                            <div class="markdown-body msg-bubble-else" v-html="rendermarkdown(message.content)">
+                            <div class="markdown-body msg-bubble-else"
+                                v-html="enhanceCodeBlock(rendermarkdown(message.content))">
                             </div>
                         </div>
                         <div v-if="message.fromMe" class="msg-my">
@@ -57,8 +56,16 @@
                                 v-html="enhanceCodeBlock(rendermarkdown(message.content))">
                             </div>
                             <div class="avatar">
-                                <img :src="message.avatar" alt="my-avatar">
+                                <img :src="message.avatar" alt="my">
                             </div>
+                        </div>
+                    </div>
+                    <div class="msg-else response" v-if="issse">
+                        <div class="avatar">
+                            <img src="https://acat-image.pages.dev/file/91d6f1b67af3ab9ca93e8.png" alt="else">
+                        </div>
+                        <div class="markdown-body msg-bubble-else"
+                            v-html="enhanceCodeBlock(rendermarkdown(this.responsemsg))">
                         </div>
                     </div>
                     <div class="fixedfoot" v-if="showScrollButton" style="position: fixed; bottom: 15%; right: 50%;">
@@ -114,6 +121,7 @@ import { marked } from 'marked';
 import hljs from "highlight.js";
 import sidebar from './sidebar.vue'
 import Sidebar from './sidebar.vue';
+import { fetchEventSource } from '@/api/fetcheventsource'
 
 
 const renderer = new marked.Renderer();
@@ -132,24 +140,25 @@ export default {
     data() {
         return {
             my_avatar: 'https://acat-image.pages.dev/file/4e27ea41320a94ea47f3e.png',
+            else_avatar: 'https://acat-image.pages.dev/file/91d6f1b67af3ab9ca93e8.png',
             newMessage: '',
+            responsemsg: '',
             historysidebarisopen: false,
             showScrollButton: false,
+            controller: null,
+            issse: false,
             messages: [
                 {
                     id: '1',
-                    content: "## Title2 \n**Test**\n ```java\nint a = test;\nint b = 111;\nint c = 123;\n```\n-test!",
+                    content: "I am a chat-bot,nice to meet you!👋",
                     fromMe: false,
                     avatar: 'https://acat-image.pages.dev/file/91d6f1b67af3ab9ca93e8.png', // 替换为服务器头像的实际 URL
-                },
-                {
-                    id: '2',
-                    content: "Hi there!",
-                    fromMe: true,
-                    avatar: 'https://acat-image.pages.dev/file/4e27ea41320a94ea47f3e.png', // 替换为用户头像的实际 URL
-                },
+                }
             ]
         }
+    },
+
+    created() {
     },
     methods: {
         openhistorysidebar() {
@@ -174,16 +183,56 @@ export default {
             this.$refs.textarea.style.height = 'auto';
             this.$refs.textarea.style.height = (this.$refs.textarea.scrollHeight) + 'px';
         },
+
         sendMessage() {
-            // 发送消息到后端
-            // 你需要根据后端的实际情况来发送消息，这里只是一个简单的示例
-            this.messages.push({
-                content: this.newMessage,
-                fromMe: true,
-                avatar: this.my_avatar, // 替换为用户头像的实际 URL
-            });
-            this.newMessage = '';
-            this.$refs.textarea.style.height = 'auto';
+            if (this.newMessage.trim()) {
+                // 发送消息到后端
+                // 你需要根据后端的实际情况来发送消息，这里只是一个简单的示例
+                this.messages.push({
+                    content: this.newMessage,
+                    fromMe: true,
+                    avatar: this.my_avatar, // 替换为用户头像的实际 URL
+                });
+                this.issse = true;
+                // 发送消息到后端
+                let params = {
+                    'question': this.newMessage
+                }
+
+                const formData = new FormData();
+                formData.append('question', this.newMessage);
+
+                this.controller = new AbortController();
+                fetchEventSource('http://127.0.0.1:8000/api/chat', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Authorization': localStorage.getItem("token")
+                    },
+                    signal: this.controller.signal,
+                    onopen: () => {
+                    },
+                    onclose: () => {
+                        this.messages.push({
+                            content: this.responsemsg,
+                            fromMe: false,
+                            avatar: this.else_avatar, // 替换为用户头像的实际 URL
+                        });
+                        this.issse = false;
+                        this.responsemsg = '';
+                    },
+                    onmessage: (event) => {
+                        this.responsemsg += event;
+                    },
+                    error: (e) => {
+                        console.log(e);
+                        this.responsemsg += 'connect falied!';
+                    }
+                });
+
+                this.newMessage = '';
+                this.$refs.textarea.style.height = 'auto';
+            }
         },
         rendermarkdown(rawtext) {
             return marked(rawtext);
@@ -196,11 +245,10 @@ export default {
             let enhance = content.replace(/<pre><code/g, '<pre><div class="enhance"><div class="lang">CODE</div><div class="copyCode">Copy<span class="el-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="currentColor" d="M128 320v576h576V320H128zm-32-64h640a32 32 0 0 1 32 32v640a32 32 0 0 1-32 32H96a32 32 0 0 1-32-32V288a32 32 0 0 1 32-32zM960 96v704a32 32 0 0 1-32 32h-96v-64h64V128H384v64h-64V96a32 32 0 0 1 32-32h576a32 32 0 0 1 32 32zM256 672h320v64H256v-64zm0-192h320v64H256v-64z"></path></svg></span></div></div><code')
             // console.log(enhance)
             return enhance
-        }
+        },
     },
-
     mounted() {
-
+        localStorage.setItem("token", "123456");
     }
 }
 </script>
@@ -233,7 +281,8 @@ export default {
     display: flex;
     flex-direction: row;
     flex-grow: 1;
-    overflow: hidden; /* 关键：防止侧边栏消失时产生空隙 */
+    overflow: hidden;
+    /* 关键：防止侧边栏消失时产生空隙 */
 
 }
 
@@ -278,12 +327,14 @@ export default {
 .msg-bubble-else {
     margin-left: 5px;
     margin-top: 10px;
+    margin-right: auto;
     min-height: 15px;
     padding: 10px;
     border-radius: 1px 8px 8px 10px;
     background-color: #F8DFDF;
     max-width: 70%;
     min-width: 40%;
+    overflow-wrap: break-word;
     /* Adjust as needed */
 }
 
@@ -295,6 +346,7 @@ export default {
     padding: 10px;
     border-radius: 8px 1px 10px 8px;
     max-width: 70%;
+    max-width: 480px;
     min-width: 20%;
     background-color: #cae5d9;
     color: #000000;
@@ -386,6 +438,37 @@ export default {
     /* 将SVG图标垂直居中对齐 */
 }
 
+.msg-bubble-else>>>pre .enhance {
+    display: flex;
+    color: #fff;
+    padding: 0px 10px;
+    border-radius: 5px 5px 0 0;
+    font-size: 16px;
+    background: #abacc0de;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.msg-bubble-else>>>.copyCode {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.5s ease-in-out;
+}
+
+.msg-bubble-else>>>&:hover {
+    color: #bae9a4d7;
+}
+
+.msg-bubble-else>>>svg {
+    height: 20px;
+    height: 20px;
+    margin-left: 5px;
+    vertical-align: middle;
+    /* 将SVG图标垂直居中对齐 */
+}
+
 svg {
     height: 1.25em;
     width: 1.25em;
@@ -393,13 +476,7 @@ svg {
     /* 将SVG图标垂直居中对齐 */
 }
 
-.slide-enter-active, .slide-leave-active {
-  transition: transform 0.5s ease;
-}
 
-.slide-enter, .slide-leave-to {
-  transform: translateX(-100%);
-}
 
 /* Add additional styling for input and send button as needed */
 </style>
