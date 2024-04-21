@@ -16,8 +16,11 @@
                         </g>
                     </svg></span>
             </div>
-            <div class="h-m"><img src="https://acat-image.pages.dev/file/50fa0534c795978b50b66.jpg" alt="logo" style="object-fit: cover;height: 1.5em;width: 1.5em;
-    vertical-align: middle;">Chat</div>
+            <div class="h-m">
+                <span>
+                    <svg style="height: 1.5em;width: 1.5em;" fill="#000000" width="256px" height="256px" viewBox="0 0 24 24" role="img" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><title>OpenAI icon</title><path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997Z"></path></g></svg>
+                </span>
+                Chat</div>
             <div class="h-r">
                 <span @click="settings"><svg style="height: 2em;width: 2em;" viewBox="0 0 24 24" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
@@ -40,16 +43,19 @@
             <div class="main-left" v-if="!historysidebarisopen">
                 <Sidebar>
                     <!-- 侧边栏内容 -->
+                    <div class="addchat" style="text-align: center;">
+                    <button @click="newchat" style="width: 100%;">开启新聊天吧
+                    </button>
+                    </div>
                     <ul>
-                        <li class="sidebar-item" v-for="(item, index) in sidebarItems" :key="index">
-                            <div class="item-container">
-                                <div class="item-link">
-                                    <router-link :to="item.route" class="sidebar-link">
-                                        {{ item.name }}
-                                    </router-link>
+                        <li class="sidebar-item" v-for="(item, index) in historylist" :key="historylist.id">
+                            <div class="item-container" :class="{selected:currentid==item.id}">
+                                <div class="item-link" style="width:100px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+                                    <span @click="openlist(item.id)">
+                                        {{ item.abstract }}</span>
                                 </div>
                                 <div class="sidebar-icons">
-                                    <span @click="deleteItem(index)">
+                                    <span @click="deleteItem(item.id)">
                                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                                             <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
@@ -139,8 +145,7 @@
                             <textarea rows="1" dir="auto" placeholder="Type Here!" ref="textarea" v-model="newMessage"
                                 @input="resizeTextarea"></textarea>
                         </div>
-                        <button @click="sendMessage">
-                            <span>
+                        <button @click="sendMessage"><span>
                                 <svg viewBox="-0.5 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                                     <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -153,8 +158,8 @@
                                             stroke-linecap="round" stroke-linejoin="round"></path>
                                     </g>
                                 </svg>
-                            </span>
-                        </button>
+                            </span></button>
+                            
                     </div>
                 </div>
             </div>
@@ -195,6 +200,7 @@ export default {
             issse: false,
             currentid:'1',
             historysize:1,
+            selectedid:'1',
             messages: [
                 {
                     role: "system",
@@ -204,7 +210,7 @@ export default {
             historylist: [
                 {
                     id:'1',
-                    abstract:"This is a test..."
+                    abstract:"New Coversation..."
                 }
             ]
         }
@@ -240,6 +246,15 @@ export default {
             if (this.newMessage.trim()) {
                 // 发送消息到后端
                 // 你需要根据后端的实际情况来发送消息，这里只是一个简单的示例
+                if(this.messages.length===1){
+                    let itr;
+                    for (itr in this.historylist){
+                        if(this.historylist[itr].id===this.currentid){
+                            this.historylist[itr].abstract = this.newMessage;
+                            localStorage.setItem("historylist",JSON.stringify(this.historylist));
+                        }
+                    }
+                }
                 this.messages.push({
                     role: "user",
                     content: this.newMessage
@@ -285,6 +300,47 @@ export default {
                 this.$refs.textarea.style.height = 'auto';
             }
         },
+        newchat(){
+            this.historysize = this.historysize+1;
+            this.currentid = (this.historysize).toString();
+            console.log(this.currentid);
+            this.historylist.push( {
+                    id:this.currentid,
+                    abstract:"New Coversation..."
+                })
+                localStorage.setItem("historylist",JSON.stringify(this.historylist));
+            localStorage.setItem(this.currentid,"");
+                this.messages = [
+                {
+                    role: "system",
+                    content: "I am a chat-bot,nice to meet you!👋"
+                }
+                ]
+        },
+
+        openlist(id){
+            this.currentid = id;
+            let msgs = localStorage.getItem(id);
+            if(msgs===""){
+                this.messages = [
+                {
+                    role: "system",
+                    content: "I am a chat-bot,nice to meet you!👋"
+                }
+                ]
+            }else{
+            this.messages = JSON.parse(localStorage.getItem(id));
+            }
+        },
+        deleteItem(id){
+            localStorage.removeItem(id);
+            this.historylist = this.historylist.filter(item => item.id != id);
+            localStorage.setItem("historylist",JSON.stringify(this.historylist));
+            if(this.currentid===id){
+                this.currentid = (this.historylist[this.historylist.length-1]).id;
+                this.messages =JSON.parse(localStorage.getItem(this.currentid)) ;
+            }
+        },
         rendermarkdown(rawtext) {
             return marked(rawtext);
         },
@@ -303,11 +359,18 @@ export default {
         if(historylist===null){
             console.log("init histry list");
             localStorage.setItem("historylist",JSON.stringify(this.historylist));
+            localStorage.setItem(this.currentid,JSON.stringify(this.messages));
         }else{
             this.historylist = JSON.parse(historylist);
-            this.currentid = (this.historylist.length).toString();
+            this.historysize = Number((this.historylist[(this.historylist.length)-1]).id);
+            console.log(this.historysize);
+            this.currentid = (this.historylist[(this.historylist.length)-1]).id;
             console.log(this.currentid);
+            if(localStorage.getItem(this.currentid)===""){
+
+            }else{
             this.messages = JSON.parse(localStorage.getItem(this.currentid));
+            }
             if(this.messages===null){
                 this.messages = [
                 {
@@ -471,7 +534,14 @@ export default {
     padding: 8px;
     cursor: pointer;
 }
-
+button {
+    background-color: #44c884;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 8px;
+    cursor: pointer;
+}
 
 .msg-bubble-my>>>pre .enhance {
     display: flex;
@@ -534,6 +604,47 @@ export default {
     vertical-align: middle;
     /* 将SVG图标垂直居中对齐 */
 }
+
+.sidebar-content {
+    padding: 10px;
+}
+
+.sidebar-content ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar-content ul li {
+    margin-bottom: 10px;
+}
+
+.sidebar-content ul li a {
+    text-decoration: none;
+    color: #333;
+}
+
+.item-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: center;
+    border: solid 1.5px #e6ebe9;
+    border-radius: 5px;
+}
+
+.selected{
+    border: solid 2.5px #54c983;
+}
+
+.item-link {
+    flex-grow: 3;
+    align-content: center;
+}
+
+.sidebar-icons {
+    align-self: center;
+}
+
 
 svg {
     height: 1.25em;
