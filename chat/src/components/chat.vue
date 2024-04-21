@@ -38,34 +38,81 @@
         </div>
         <div class="main-content">
             <div class="main-left" v-if="!historysidebarisopen">
-                <Sidebar />
+                <Sidebar>
+                    <!-- 侧边栏内容 -->
+                    <ul>
+                        <li class="sidebar-item" v-for="(item, index) in sidebarItems" :key="index">
+                            <div class="item-container">
+                                <div class="item-link">
+                                    <router-link :to="item.route" class="sidebar-link">
+                                        {{ item.name }}
+                                    </router-link>
+                                </div>
+                                <div class="sidebar-icons">
+                                    <span @click="deleteItem(index)">
+                                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
+                                                stroke-linejoin="round"></g>
+                                            <g id="SVGRepo_iconCarrier">
+                                                <path d="M10 12V17" stroke="#db0000" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round"></path>
+                                                <path d="M14 12V17" stroke="#db0000" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round"></path>
+                                                <path d="M4 7H20" stroke="#db0000" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round"></path>
+                                                <path
+                                                    d="M6 10V18C6 19.6569 7.34315 21 9 21H15C16.6569 21 18 19.6569 18 18V10"
+                                                    stroke="#db0000" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round"></path>
+                                                <path
+                                                    d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z"
+                                                    stroke="#db0000" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round"></path>
+                                            </g>
+                                        </svg>
+                                    </span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </Sidebar>
             </div>
             <div class="main-right">
                 <div class="msgs-list" ref="scrollableContent" @scroll="handleScroll">
-                    <div v-for="(message) in messages" :key="message.id" class="msg">
-                        <div v-if="!message.fromMe" class="msg-else">
+                    <div v-for="(message, index) in messages" :key="index" class="msg">
+                        <div v-if="!(message.role === 'user')" class="msg-else">
                             <div class="avatar">
-                                <img :src="message.avatar" alt="else">
+                                <img :src="this.else_avatar" alt="else">
                             </div>
                             <div class="markdown-body msg-bubble-else"
                                 v-html="enhanceCodeBlock(rendermarkdown(message.content))">
                             </div>
                         </div>
-                        <div v-if="message.fromMe" class="msg-my">
+                        <div v-if="message.role === 'user'" class="msg-my">
                             <div class="markdown-body msg-bubble-my"
                                 v-html="enhanceCodeBlock(rendermarkdown(message.content))">
                             </div>
                             <div class="avatar">
-                                <img :src="message.avatar" alt="my">
+                                <img :src="this.my_avatar" alt="my">
                             </div>
                         </div>
                     </div>
                     <div class="msg-else response" v-if="issse">
                         <div class="avatar">
-                            <img src="https://acat-image.pages.dev/file/91d6f1b67af3ab9ca93e8.png" alt="else">
+                            <img :src="this.else_avatar" alt="else">
                         </div>
-                        <div class="markdown-body msg-bubble-else"
-                            v-html="enhanceCodeBlock(rendermarkdown(this.responsemsg))">
+                        <div class="markdown-body msg-bubble-else">
+                            <div class="md" v-html="enhanceCodeBlock(rendermarkdown(this.responsemsg))">
+
+                            </div>
+
+                            <div class="thinking">
+                                <span
+                                    style="background-image: linear-gradient(to right, orange, purple);-webkit-background-clip: text;color: transparent;">
+                                    I am thinking 🦄, please wait a minute💕
+                                </span>
+                            </div>
                         </div>
                     </div>
                     <div class="fixedfoot" v-if="showScrollButton" style="position: fixed; bottom: 15%; right: 50%;">
@@ -119,7 +166,6 @@
 <script>
 import { marked } from 'marked';
 import hljs from "highlight.js";
-import sidebar from './sidebar.vue'
 import Sidebar from './sidebar.vue';
 import { fetchEventSource } from '@/api/fetcheventsource'
 
@@ -147,12 +193,18 @@ export default {
             showScrollButton: false,
             controller: null,
             issse: false,
+            currentid:'1',
+            historysize:1,
             messages: [
                 {
-                    id: '1',
-                    content: "I am a chat-bot,nice to meet you!👋",
-                    fromMe: false,
-                    avatar: 'https://acat-image.pages.dev/file/91d6f1b67af3ab9ca93e8.png', // 替换为服务器头像的实际 URL
+                    role: "system",
+                    content: "I am a chat-bot,nice to meet you!👋"
+                }
+            ],
+            historylist: [
+                {
+                    id:'1',
+                    abstract:"This is a test..."
                 }
             ]
         }
@@ -189,18 +241,13 @@ export default {
                 // 发送消息到后端
                 // 你需要根据后端的实际情况来发送消息，这里只是一个简单的示例
                 this.messages.push({
-                    content: this.newMessage,
-                    fromMe: true,
-                    avatar: this.my_avatar, // 替换为用户头像的实际 URL
+                    role: "user",
+                    content: this.newMessage
                 });
                 this.issse = true;
                 // 发送消息到后端
-                let params = {
-                    'question': this.newMessage
-                }
-
                 const formData = new FormData();
-                formData.append('question', this.newMessage);
+                formData.append('msgs', JSON.stringify(this.messages));
 
                 this.controller = new AbortController();
                 fetchEventSource('http://127.0.0.1:8000/api/chat', {
@@ -214,10 +261,10 @@ export default {
                     },
                     onclose: () => {
                         this.messages.push({
-                            content: this.responsemsg,
-                            fromMe: false,
-                            avatar: this.else_avatar, // 替换为用户头像的实际 URL
+                            role: "assistant",
+                            content: this.responsemsg
                         });
+                        localStorage.setItem(this.currentid,JSON.stringify(this.messages));
                         this.issse = false;
                         this.responsemsg = '';
                     },
@@ -227,6 +274,10 @@ export default {
                     error: (e) => {
                         console.log(e);
                         this.responsemsg += 'connect falied!';
+                        this.messages.push({
+                            role: "assistant",
+                            content: " "
+                        })
                     }
                 });
 
@@ -248,14 +299,31 @@ export default {
         },
     },
     mounted() {
-        localStorage.setItem("token", "123456");
+        let historylist = localStorage.getItem("historylist")
+        if(historylist===null){
+            console.log("init histry list");
+            localStorage.setItem("historylist",JSON.stringify(this.historylist));
+        }else{
+            this.historylist = JSON.parse(historylist);
+            this.currentid = (this.historylist.length).toString();
+            console.log(this.currentid);
+            this.messages = JSON.parse(localStorage.getItem(this.currentid));
+            if(this.messages===null){
+                this.messages = [
+                {
+                    role: "system",
+                    content: "I am a chat-bot,nice to meet you!👋"
+                }
+                ]
+            }
+        }
     }
 }
 </script>
 <style scoped>
 .chat-container {
-    min-width: 300px;
     height: 100%;
+    max-width: 100%;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
@@ -279,6 +347,7 @@ export default {
 
 .main-content {
     display: flex;
+    max-width: 100%;
     flex-direction: row;
     flex-grow: 1;
     overflow: hidden;
@@ -332,8 +401,7 @@ export default {
     padding: 10px;
     border-radius: 1px 8px 8px 10px;
     background-color: #F8DFDF;
-    max-width: 70%;
-    min-width: 40%;
+    max-width: 65%;
     overflow-wrap: break-word;
     /* Adjust as needed */
 }
@@ -345,9 +413,7 @@ export default {
     min-height: 15px;
     padding: 10px;
     border-radius: 8px 1px 10px 8px;
-    max-width: 70%;
-    max-width: 480px;
-    min-width: 20%;
+    max-width: 65%;
     background-color: #cae5d9;
     color: #000000;
     overflow-wrap: break-word;

@@ -6,7 +6,8 @@
             </h2>
         </div>
         <div class="sidebar-content">
-            <!-- 侧边栏内容 -->
+            <slot>
+                <!-- 侧边栏内容 -->
             <ul>
                 <li class="sidebar-item" v-for="(item, index) in sidebarItems" :key="index">
                     <div class="item-container">
@@ -24,11 +25,9 @@
                             </span>
                         </div>
                     </div>
-
-
-
                 </li>
             </ul>
+            </slot>
         </div>
     </div>
 </template>

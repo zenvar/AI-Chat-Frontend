@@ -8,9 +8,17 @@ export const getUserInfo = (params) => {
     params,
   });
 };
-export const login = (data) => {
+export const loginapi = (data) => {
   return serviceAxios({
-    url: "/api/user/login",
+    url: "/test/login",
+    method: "post",
+    data,
+  });
+};
+
+export const registry = (data) => {
+  return serviceAxios({
+    url: "/test/registry",
     method: "post",
     data,
   });
