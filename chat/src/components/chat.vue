@@ -18,9 +18,31 @@
             </div>
             <div class="h-m">
                 <span>
-                    <svg style="height: 1.5em;width: 1.5em;" fill="#000000" width="256px" height="256px" viewBox="0 0 24 24" role="img" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><title>OpenAI icon</title><path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997Z"></path></g></svg>
+                    <svg style="height: 1.5em;width: 1.5em;" fill="#000000" width="256px" height="256px"
+                        viewBox="0 0 24 24" role="img" xmlns="http://www.w3.org/2000/svg">
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                        <g id="SVGRepo_iconCarrier">
+                            <title>OpenAI icon</title>
+                            <path
+                                d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997Z">
+                            </path>
+                        </g>
+                    </svg>
                 </span>
-                Chat</div>
+                Chat
+                <span @click="exportData"><svg style="height: 1.5em;width: 1.5em;" fill="#000000" viewBox="0 0 256 256"
+                        id="Flat" xmlns="http://www.w3.org/2000/svg">
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                        <g id="SVGRepo_iconCarrier">
+                            <path d="M208,96V216H48V96Z" opacity="0.2"></path>
+                            <path
+                                d="M80.34229,63.64551A8,8,0,0,1,80.34375,52.332l42-41.98926a8.00063,8.00063,0,0,1,11.3125,0l42,41.98926a7.99983,7.99983,0,1,1-11.3125,11.31445L136,35.3103V128a8,8,0,0,1-16,0V35.3103L91.65625,63.64648A7.99885,7.99885,0,0,1,80.34229,63.64551ZM200,88H176a8,8,0,0,0,0,16h24V208H56V104H80a8,8,0,0,0,0-16H56a16.01833,16.01833,0,0,0-16,16V208a16.01833,16.01833,0,0,0,16,16H200a16.01833,16.01833,0,0,0,16-16V104A16.01833,16.01833,0,0,0,200,88Z">
+                            </path>
+                        </g>
+                    </svg></span>
+            </div>
             <div class="h-r">
                 <span @click="settings"><svg style="height: 2em;width: 2em;" viewBox="0 0 24 24" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
@@ -44,13 +66,14 @@
                 <Sidebar>
                     <!-- 侧边栏内容 -->
                     <div class="addchat" style="text-align: center;">
-                    <button @click="newchat" style="width: 100%;">开启新聊天吧
-                    </button>
+                        <button @click="newchat" style="width: 100%;">开启新聊天吧
+                        </button>
                     </div>
                     <ul>
                         <li class="sidebar-item" v-for="(item, index) in historylist" :key="historylist.id">
-                            <div class="item-container" :class="{selected:currentid==item.id}">
-                                <div class="item-link" style="width:100px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+                            <div class="item-container" :class="{ selected: currentid == item.id }">
+                                <div class="item-link"
+                                    style="width:100px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
                                     <span @click="openlist(item.id)">
                                         {{ item.abstract }}</span>
                                 </div>
@@ -85,6 +108,9 @@
                 </Sidebar>
             </div>
             <div class="main-right">
+                <dialog-bar v-model:value="this.sendVal" type="danger" title="我是标题" content="我是内容" v-on:cancel="clickCancel()"
+                    @danger="clickDanger()" @confirm="clickConfirm()" dangerText="Delete"></dialog-bar>
+
                 <div class="msgs-list" ref="scrollableContent" @scroll="handleScroll">
                     <div v-for="(message, index) in messages" :key="index" class="msg">
                         <div v-if="!(message.role === 'user')" class="msg-else">
@@ -159,20 +185,26 @@
                                     </g>
                                 </svg>
                             </span></button>
-                            
+                            <setting></setting>
                     </div>
                 </div>
             </div>
 
         </div>
     </div>
+
+
 </template>
 
 <script>
 import { marked } from 'marked';
 import hljs from "highlight.js";
 import Sidebar from './sidebar.vue';
-import { fetchEventSource } from '@/api/fetcheventsource'
+import setting from './setting.vue';
+import dialogBar from './dialog.vue';
+
+import { fetchEventSource } from '@/api/fetcheventsource';
+
 
 
 const renderer = new marked.Renderer();
@@ -188,6 +220,9 @@ marked.setOptions({
 });
 
 export default {
+    components: {
+        'dialog-bar': dialogBar,
+    },
     data() {
         return {
             my_avatar: 'https://acat-image.pages.dev/file/4e27ea41320a94ea47f3e.png',
@@ -198,9 +233,10 @@ export default {
             showScrollButton: false,
             controller: null,
             issse: false,
-            currentid:'1',
-            historysize:1,
-            selectedid:'1',
+            currentid: '1',
+            historysize: 1,
+            selectedid: '1',
+            sendVal: false,
             messages: [
                 {
                     role: "system",
@@ -209,8 +245,8 @@ export default {
             ],
             historylist: [
                 {
-                    id:'1',
-                    abstract:"New Coversation..."
+                    id: '1',
+                    abstract: "New Coversation..."
                 }
             ]
         }
@@ -246,12 +282,12 @@ export default {
             if (this.newMessage.trim()) {
                 // 发送消息到后端
                 // 你需要根据后端的实际情况来发送消息，这里只是一个简单的示例
-                if(this.messages.length===1){
+                if (this.messages.length === 1) {
                     let itr;
-                    for (itr in this.historylist){
-                        if(this.historylist[itr].id===this.currentid){
+                    for (itr in this.historylist) {
+                        if (this.historylist[itr].id === this.currentid) {
                             this.historylist[itr].abstract = this.newMessage;
-                            localStorage.setItem("historylist",JSON.stringify(this.historylist));
+                            localStorage.setItem("historylist", JSON.stringify(this.historylist));
                         }
                     }
                 }
@@ -279,9 +315,12 @@ export default {
                             role: "assistant",
                             content: this.responsemsg
                         });
-                        localStorage.setItem(this.currentid,JSON.stringify(this.messages));
+                        localStorage.setItem(this.currentid, JSON.stringify(this.messages));
                         this.issse = false;
                         this.responsemsg = '';
+                        
+                        
+
                     },
                     onmessage: (event) => {
                         this.responsemsg += event;
@@ -300,49 +339,75 @@ export default {
                 this.$refs.textarea.style.height = 'auto';
             }
         },
-        newchat(){
-            this.historysize = this.historysize+1;
+        newchat() {
+            this.historysize = this.historysize + 1;
             this.currentid = (this.historysize).toString();
             console.log(this.currentid);
-            this.historylist.push( {
-                    id:this.currentid,
-                    abstract:"New Coversation..."
-                })
-                localStorage.setItem("historylist",JSON.stringify(this.historylist));
-            localStorage.setItem(this.currentid,"");
-                this.messages = [
+            this.historylist.push({
+                id: this.currentid,
+                abstract: "New Coversation..."
+            })
+            localStorage.setItem("historylist", JSON.stringify(this.historylist));
+            localStorage.setItem(this.currentid, "");
+            this.messages = [
                 {
                     role: "system",
                     content: "I am a chat-bot,nice to meet you!👋"
                 }
-                ]
+            ]
         },
 
-        openlist(id){
+        openlist(id) {
             this.currentid = id;
             let msgs = localStorage.getItem(id);
-            if(msgs===""){
+            if (msgs === "") {
                 this.messages = [
-                {
-                    role: "system",
-                    content: "I am a chat-bot,nice to meet you!👋"
-                }
+                    {
+                        role: "system",
+                        content: "I am a chat-bot,nice to meet you!👋"
+                    }
                 ]
-            }else{
-            this.messages = JSON.parse(localStorage.getItem(id));
+            } else {
+                this.messages = JSON.parse(localStorage.getItem(id));
             }
         },
-        deleteItem(id){
+        deleteItem(id) {
             localStorage.removeItem(id);
             this.historylist = this.historylist.filter(item => item.id != id);
-            localStorage.setItem("historylist",JSON.stringify(this.historylist));
-            if(this.currentid===id){
-                this.currentid = (this.historylist[this.historylist.length-1]).id;
-                this.messages =JSON.parse(localStorage.getItem(this.currentid)) ;
+            localStorage.setItem("historylist", JSON.stringify(this.historylist));
+            if (this.currentid === id) {
+                this.currentid = (this.historylist[this.historylist.length - 1]).id;
+                this.messages = JSON.parse(localStorage.getItem(this.currentid));
             }
         },
         rendermarkdown(rawtext) {
             return marked(rawtext);
+        },
+
+        clickCancel() {
+            console.log('点击了取消');
+        },
+        clickDanger() {
+            console.log('这里是danger回调')
+        },
+        clickConfirm() {
+            console.log('点击了confirm');
+        },
+
+        settings() {
+            this.sendVal = true;
+        },
+
+        exportData() {
+            // 导出数据为 JSON 文件
+            const blob = new Blob([JSON.stringify(this.messages, null, 2)], {
+                type: 'application/json'
+            });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'data.json';
+            a.click();
         },
 
         //增强代码块
@@ -356,27 +421,27 @@ export default {
     },
     mounted() {
         let historylist = localStorage.getItem("historylist")
-        if(historylist===null){
+        if (historylist === null) {
             console.log("init histry list");
-            localStorage.setItem("historylist",JSON.stringify(this.historylist));
-            localStorage.setItem(this.currentid,JSON.stringify(this.messages));
-        }else{
+            localStorage.setItem("historylist", JSON.stringify(this.historylist));
+            localStorage.setItem(this.currentid, JSON.stringify(this.messages));
+        } else {
             this.historylist = JSON.parse(historylist);
-            this.historysize = Number((this.historylist[(this.historylist.length)-1]).id);
+            this.historysize = Number((this.historylist[(this.historylist.length) - 1]).id);
             console.log(this.historysize);
-            this.currentid = (this.historylist[(this.historylist.length)-1]).id;
+            this.currentid = (this.historylist[(this.historylist.length) - 1]).id;
             console.log(this.currentid);
-            if(localStorage.getItem(this.currentid)===""){
+            if (localStorage.getItem(this.currentid) === "") {
 
-            }else{
-            this.messages = JSON.parse(localStorage.getItem(this.currentid));
+            } else {
+                this.messages = JSON.parse(localStorage.getItem(this.currentid));
             }
-            if(this.messages===null){
+            if (this.messages === null) {
                 this.messages = [
-                {
-                    role: "system",
-                    content: "I am a chat-bot,nice to meet you!👋"
-                }
+                    {
+                        role: "system",
+                        content: "I am a chat-bot,nice to meet you!👋"
+                    }
                 ]
             }
         }
@@ -534,6 +599,7 @@ export default {
     padding: 8px;
     cursor: pointer;
 }
+
 button {
     background-color: #44c884;
     color: #fff;
@@ -625,14 +691,16 @@ button {
 
 .item-container {
     display: flex;
+    padding: 4px;
     flex-direction: row;
     justify-content: space-between;
+    height: 30px;
     align-content: center;
-    border: solid 1.5px #e6ebe9;
+    border: solid 1.5px #e5f9f1;
     border-radius: 5px;
 }
 
-.selected{
+.selected {
     border: solid 2.5px #54c983;
 }
 
