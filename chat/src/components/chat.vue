@@ -202,15 +202,21 @@ import hljs from "highlight.js";
 import Sidebar from './sidebar.vue';
 import setting from './setting.vue';
 import dialogBar from './dialog.vue';
+import JSConfetti from 'js-confetti';
 import useClipboard from "vue-clipboard3";
 const { toClipboard } = useClipboard();
-
+const confetti = new JSConfetti()
 import { fetchEventSource } from '@/api/fetcheventsource';
+
+function showConfetti() {
+  confetti.addConfetti()
+}
 
 const copy = async (content) => {
     //追加字符串
     // content = content + "\n\n以上内容为 AI 生成，不代表任何立场-- zenvar@GZHU"
     await toClipboard(content);
+    showConfetti();
     console.log('copy!');
     console.log(content);
 }
