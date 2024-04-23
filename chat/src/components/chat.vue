@@ -116,11 +116,13 @@
                                 <img :src="this.else_avatar" alt="else">
                             </div>
                             <div class="markdown-body msg-bubble-else"
+                            v-enhancecode
                                 v-html="enhanceCodeBlock(rendermarkdown(message.content))">
                             </div>
                         </div>
                         <div v-if="message.role === 'user'" class="msg-my">
                             <div class="markdown-body msg-bubble-my"
+                            v-enhancecode
                                 v-html="enhanceCodeBlock(rendermarkdown(message.content))">
                             </div>
                             <div class="avatar">
@@ -183,7 +185,7 @@
                                     </g>
                                 </svg>
                             </span></button>
-                            <setting v-model:value="sendVal"></setting>
+                        <setting v-model:value="sendVal"></setting>
                     </div>
                 </div>
             </div>
@@ -200,10 +202,18 @@ import hljs from "highlight.js";
 import Sidebar from './sidebar.vue';
 import setting from './setting.vue';
 import dialogBar from './dialog.vue';
+import useClipboard from "vue-clipboard3";
+const { toClipboard } = useClipboard();
 
 import { fetchEventSource } from '@/api/fetcheventsource';
 
-
+const copy = async (content) => {
+    //追加字符串
+    // content = content + "\n\n以上内容为 AI 生成，不代表任何立场-- zenvar@GZHU"
+    await toClipboard(content);
+    console.log('copy!');
+    console.log(content);
+}
 
 const renderer = new marked.Renderer();
 
@@ -218,9 +228,42 @@ marked.setOptions({
 });
 
 export default {
+    directives: {
+        // 在模板中启用 v-enhancecode
+        enhancecode: (el) => {
+            console.log("enhance");
+
+            let codeBlocks = el.querySelectorAll('pre');
+            codeBlocks.forEach(function (codeBlock, i) {
+                const code = codeBlock.querySelector("code");
+                let lang;
+                if (code) {
+                }
+
+                const enhance = codeBlock.querySelector(".enhance");
+                if (enhance && enhance.querySelector(".lang").innerHTML === "CODE") {
+                    enhance.querySelector(".lang").innerHTML = lang;
+                    let copyCode = enhance.querySelector(".copyCode");
+                    copyCode = enhance.querySelector(".copyCode");
+                    if (copyCode && typeof copyCode.addEventListener === 'function') {
+                        copyCode.addEventListener("click", function () {
+                            copy(code.innerText); // Assuming 'copy' is a defined function
+                        });
+                    } else if (typeof copyCode.attachEvent === 'function') {
+                        copyCode.attachEvent("onclick", function clipboardEvent() {
+                            copy(code.innerText); // Assuming 'copy' is a defined function
+                        });
+                    }
+                }
+            });
+
+        }
+    },
+
     components: {
         'dialog-bar': dialogBar,
     },
+
     data() {
         return {
             my_avatar: 'https://acat-image.pages.dev/file/4e27ea41320a94ea47f3e.png',
@@ -235,7 +278,7 @@ export default {
             historysize: 1,
             selectedid: '1',
             sendVal: false,
-            dialogcontent:"",
+            dialogcontent: "",
             messages: [
                 {
                     role: "system",
@@ -254,6 +297,7 @@ export default {
     created() {
     },
     methods: {
+
         openhistorysidebar() {
             this.historysidebarisopen = !this.historysidebarisopen;
         },
@@ -317,8 +361,8 @@ export default {
                         localStorage.setItem(this.currentid, JSON.stringify(this.messages));
                         this.issse = false;
                         this.responsemsg = '';
-                        
-                        
+
+
 
                     },
                     onmessage: (event) => {
