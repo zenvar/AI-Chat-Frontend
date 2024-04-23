@@ -1,5 +1,5 @@
 <template>
-    <div class="setting-container">
+    <div class="setting-container" v-show="showMask">
       <!-- Top image -->
       <img src="https://acat-image.pages.dev/file/b4570d25bc52b352298e7.gif" alt="Image" />
       
@@ -18,26 +18,77 @@
       <div class="bottom-buttons">
         <button @click="handleExit">退出登录</button>
         <button @click="handleClose">关闭窗口</button>
+        
+        <dialog-bar v-model:value="this.sendVal" type="danger" title="🤔确定要退出登录吗？" content="三思而后行——退出后重新登陆🥲" v-on:cancel="clickCancel()"
+                    @danger="clickDanger()" @confirm="clickConfirm()" dangerText="Delete"></dialog-bar>
       </div>
     </div>
   </template>
   
   <script>
+  
+import dialogBar from './dialog.vue';
   export default {
+    props:{
+      value:{
+
+      },
+    },
+    
+    components: {
+        'dialog-bar': dialogBar,
+    },
+    
     data() {
       return {
+        showMask:false,
         selectedOption: '',
         sliderValue: 0,
+        sendVal:false,
       }
     },
     methods: {
+        closeMask() {
+            this.showMask = false;
+        },
+
       handleExit() {
+        this.sendVal=true;
+
         // exit login logic
       },
       handleClose() {
         // close window logic
-      }
-    }
+        
+        this.$emit('cancel');
+            this.closeMask();
+      },
+        clickCancel() {
+            console.log('点击了取消');
+        },
+        clickDanger() {
+          localStorage.setItem("token","");
+          this.$router.push({ path: '/login' }); // 跳转到指定路径
+            console.log('这里是danger回调')
+        },
+        clickConfirm() {
+            console.log('点击了confirm');
+        },
+    },
+    mounted() {
+      this.showMask = this.value;
+        console.log(this.showMask)
+    },
+    
+    watch: {
+        value(newVal, oldVal) {
+            console.log(newVal)
+            this.showMask = newVal;
+        },
+        showMask(val) {
+            this.$emit('update:value', val);
+        }
+    },
   }
   </script>
 

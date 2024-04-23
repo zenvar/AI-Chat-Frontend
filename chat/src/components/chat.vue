@@ -108,8 +108,6 @@
                 </Sidebar>
             </div>
             <div class="main-right">
-                <dialog-bar v-model:value="this.sendVal" type="danger" title="我是标题" content="我是内容" v-on:cancel="clickCancel()"
-                    @danger="clickDanger()" @confirm="clickConfirm()" dangerText="Delete"></dialog-bar>
 
                 <div class="msgs-list" ref="scrollableContent" @scroll="handleScroll">
                     <div v-for="(message, index) in messages" :key="index" class="msg">
@@ -185,7 +183,7 @@
                                     </g>
                                 </svg>
                             </span></button>
-                            <setting></setting>
+                            <setting v-model:value="sendVal"></setting>
                     </div>
                 </div>
             </div>
@@ -237,6 +235,7 @@ export default {
             historysize: 1,
             selectedid: '1',
             sendVal: false,
+            dialogcontent:"",
             messages: [
                 {
                     role: "system",
@@ -384,15 +383,6 @@ export default {
             return marked(rawtext);
         },
 
-        clickCancel() {
-            console.log('点击了取消');
-        },
-        clickDanger() {
-            console.log('这里是danger回调')
-        },
-        clickConfirm() {
-            console.log('点击了confirm');
-        },
 
         settings() {
             this.sendVal = true;
