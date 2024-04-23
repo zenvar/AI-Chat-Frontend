@@ -248,7 +248,7 @@ export default {
 
                 const enhance = codeBlock.querySelector(".enhance");
                 if (enhance && enhance.querySelector(".lang").innerHTML === "CODE") {
-                    enhance.querySelector(".lang").innerHTML = lang;
+                    // enhance.querySelector(".lang").innerHTML = lang;
                     let copyCode = enhance.querySelector(".copyCode");
                     copyCode = enhance.querySelector(".copyCode");
                     if (copyCode && typeof copyCode.addEventListener === 'function') {
