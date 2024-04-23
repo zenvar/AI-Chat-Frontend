@@ -5,7 +5,7 @@
       
       <!-- Center content -->
       <div class="center-content">
-        <textarea placeholder="Text area"></textarea>
+        <textarea placeholder="Prompts 指令："></textarea>
         <select v-model="selectedOption">
           <option value="">Select an option</option>
           <option value="1">Option 1</option>

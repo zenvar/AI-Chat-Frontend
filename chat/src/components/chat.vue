@@ -272,8 +272,8 @@ export default {
 
     data() {
         return {
-            my_avatar: 'https://acat-image.pages.dev/file/4e27ea41320a94ea47f3e.png',
-            else_avatar: 'https://acat-image.pages.dev/file/91d6f1b67af3ab9ca93e8.png',
+            my_avatar: 'https://acat-image.pages.dev/file/d49aeb7059af3c7ba4acf.png',
+            else_avatar: 'https://acat-image.pages.dev/file/a0dfbcc235cece8808ffc.png',
             newMessage: '',
             responsemsg: '',
             historysidebarisopen: false,
