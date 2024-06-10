@@ -7,9 +7,14 @@
       <div class="center-content">
         <textarea placeholder="Prompts 指令："></textarea>
         <select v-model="selectedOption">
-          <option value="">Select an option</option>
-          <option value="1">Option 1</option>
-          <option value="2">Option 2</option>
+          <option value="">选择模型</option>
+          <option value="1">GPT4-OpenAI</option>
+          <option value="2">GPT3.5-OpenAI</option>
+          <option value="3">Llama3-70B-Groq</option>
+          <option value="4">Llama3-8B-Groq</option>
+          <option value="5">Gemini1.5pro-Google</option>
+          <option value="6">Ollama-Localhost</option>
+
         </select>
         <slider :value.sync="sliderValue" min="0" max="1"></slider>
       </div>

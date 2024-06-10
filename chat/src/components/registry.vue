@@ -2,7 +2,7 @@
     <div class="container">
         <div class="login-form">
             <img src="https://acat-image.pages.dev/file/a244c859449551230b3a2.png" alt="logo">
-            <h2>Login</h2>
+            <h2>Registry</h2>
             <input v-model="form.account" type="text" name="username" placeholder="用户名" />
             <input v-model="form.password" type="password" name="password" placeholder="密码" />
             <button @click="doregistry" >Registry</button>   
